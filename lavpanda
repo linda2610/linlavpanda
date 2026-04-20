@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🐼 Linda Lavpanda · Digital Sanctuary</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink:      #1A0A2E;
+      --purple:   #4B0082;
+      --lavender: #E8E4F8;
+      --cream:    #F9F5FF;
+      --matcha:   #7DA05A;
+      --matcha-l: #AECB8B;
+      --mist:     #B8CEDD;
+      --border:   4px solid var(--ink);
+      --shadow-p: 10px 10px 0 var(--purple);
+      --shadow-m: 10px 10px 0 var(--matcha);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--lavender);
+      color: var(--ink);
+      font-family: 'DM Sans', sans-serif;
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    /* ─── RAIN CANVAS ─────────────────────────── */
+    #rain {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.18;
+    }
+
+    /* ─── SITE WRAPPER ────────────────────────── */
+    .site { position: relative; z-index: 1; }
+
+    /* ─── HEADER ──────────────────────────────── */
+    header {
+      position: sticky; top: 0; z-index: 200;
+      background: var(--cream);
+      border-bottom: var(--border);
+      box-shadow: 0 6px 0 var(--purple);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 6%;
+    }
+
+    .logo {
+      font-family: 'Caveat', cursive;
+      font-size: 2.1rem;
+      font-weight: 800;
+      color: var(--purple);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+
+    nav { display: flex; gap: 6px; }
+
+    nav a {
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 6px 12px;
+      border: 2px solid transparent;
+      transition: border-color .18s, background .18s, color .18s;
+    }
+
+    nav a:hover {
+      border-color: var(--ink);
+      background: var(--matcha-l);
+      color: var(--ink);
+    }
+
+    .menu-toggle { display: none; cursor: pointer; background: none; border: var(--border); padding: 4px 8px; font-size: 1.1rem; }
+
+    /* ─── CONTAINER ───────────────────────────── */
+    .wrap {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 50px 24px 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 52px;
+    }
+
+    /* ─── HERO ────────────────────────────────── */
+    .hero {
+      position: relative;
+      min-height: 540px;
+      border: var(--border);
+      box-shadow: 14px 14px 0 var(--ink);
+      border-radius: 6px;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+      background: var(--purple);
+    }
+
+    .hero-bg {
+      position: absolute; inset: 0;
+      background-image: url('WhatsApp Image 2026-04-19 at 00.59.46 (1).jpeg');
+      background-size: cover;
+      background-position: center top;
+      transition: transform 6s ease;
+    }
+
+    .hero:hover .hero-bg { transform: scale(1.03); }
+
+    /* fallback gradient when image missing */
+    .hero-bg::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, #2E0060 0%, #4B0082 40%, #7DA05A44 100%);
+      opacity: 0.55;
+    }
+
+    .hero-glass {
+      position: relative; z-index: 2;
+      margin: 36px;
+      background: rgba(15, 5, 35, 0.65);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 2px solid rgba(255,255,255,0.18);
+      border-radius: 12px;
+      padding: 40px 44px;
+      max-width: 580px;
+      color: var(--cream);
+    }
+
+    .hero-eyebrow {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--matcha-l);
+      margin-bottom: 10px;
+    }
+
+    .hero h1 {
+      font-family: 'Caveat', cursive;
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      font-weight: 800;
+      line-height: 1.08;
+      margin-bottom: 16px;
+    }
+
+    .hero p {
+      font-size: 1.05rem;
+      font-weight: 300;
+      line-height: 1.7;
+      color: rgba(232,228,248,0.88);
+      max-width: 420px;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 22px;
+      padding: 11px 28px;
+      background: var(--matcha);
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 0.02em;
+      border: 3px solid var(--ink);
+      box-shadow: 5px 5px 0 var(--cream);
+      transition: transform .18s, box-shadow .18s, background .18s;
+    }
+
+    .btn:hover {
+      background: var(--cream);
+      transform: translate(-2px, -2px);
+      box-shadow: 7px 7px 0 var(--matcha-l);
+    }
+
+    /* ─── SECTION CARD ────────────────────────── */
+    .card {
+      background: var(--cream);
+      border: var(--border);
+      box-shadow: var(--shadow-p);
+      padding: 36px 40px;
+      border-radius: 4px;
+      transition: transform .18s, box-shadow .18s;
+      animation: slideUp .45s ease both;
+    }
+
+    .card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: var(--shadow-m);
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .section-tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+      color: var(--cream);
+      background: var(--purple);
+      padding: 4px 10px;
+      border: 2px solid var(--ink);
+      margin-bottom: 10px;
+    }
+
+    .card h2 {
+      font-family: 'Caveat', cursive;
+      font-size: 2.6rem;
+      font-weight: 700;
+      border-bottom: var(--border);
+      padding-bottom: 6px;
+      margin-bottom: 20px;
+      line-height: 1.1;
+    }
+
+    .card > p { font-size: 1rem; color: #3a2560; margin-bottom: 24px; }
+
+    /* ─── LEARNING LAB GRID ───────────────────── */
+    .topic-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    .topic {
+      border-left: 8px solid var(--matcha);
+      border-top: 3px solid var(--ink);
+      border-right: 3px solid var(--ink);
+      border-bottom: 3px solid var(--ink);
+      background: #fff;
+      padding: 20px;
+      box-shadow: 4px 4px 0 var(--mist);
+      transition: transform .15s, box-shadow .15s;
+    }
+
+    .topic:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0 var(--matcha-l);
+    }
+
+    .topic h3 {
+      font-family: 'Caveat', cursive;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--purple);
+    }
+
+    .topic p { font-size: 0.92rem; color: #3a2560; line-height: 1.55; }
+
+    .topic-icon {
+      font-size: 1.6rem;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    /* ─── COMIC SHELF ─────────────────────────── */
+    .shelf-wrap {
+      overflow-x: auto;
+      padding-bottom: 16px;
+      cursor: grab;
+    }
+
+    .shelf-wrap:active { cursor: grabbing; }
+
+    .shelf {
+      display: flex;
+      gap: 16px;
+      width: max-content;
+      padding: 8px 2px 12px;
+    }
+
+    .book {
+      width: 130px;
+      height: 190px;
+      border: var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      font-family: 'Caveat', cursive;
+      font-size: 1.35rem;
+      font-weight: 700;
+      box-shadow: 5px 5px 0 var(--ink);
+      transition: transform .25s cubic-bezier(.34,1.56,.64,1);
+      cursor: pointer;
+      user-select: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .book::after {
+      content: '';
+      position: absolute;
+      left: 0; top: 0;
+      width: 14px; height: 100%;
+      background: rgba(0,0,0,0.15);
+    }
+
+    .book:hover { transform: rotate(-6deg) translateY(-12px); }
+
+    .b1 { background: var(--purple);  color: var(--lavender); }
+    .b2 { background: var(--mist);    color: var(--ink); }
+    .b3 { background: var(--matcha);  color: var(--ink); }
+    .b4 { background: #C3B1E1;        color: var(--ink); }
+    .b5 { background: #E8A598;        color: var(--ink); }
+    .b6 { background: var(--ink);     color: var(--lavender); }
+
+    /* ─── RAINY CORNER ────────────────────────── */
+    .rain-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .rain-cell { display: flex; flex-direction: column; gap: 12px; }
+
+    .img-frame {
+      width: 100%;
+      height: 230px;
+      border: var(--border);
+      overflow: hidden;
+      position: relative;
+      box-shadow: 6px 6px 0 var(--purple);
+    }
+
+    .img-frame img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* fallback art when image missing */
+    .img-frame .fallback {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 4rem;
+    }
+
+    .img-frame .f1 {
+      background: linear-gradient(145deg, #8FA9B8 0%, #B8CEDD 50%, #E8E4F8 100%);
+    }
+
+    .img-frame .f2 {
+      background: linear-gradient(145deg, #C3B1E1 0%, #E8E4F8 60%, #AECB8B 100%);
+    }
+
+    .img-frame .f3 {
+      background: linear-gradient(145deg, #7DA05A 0%, #AECB8B 50%, #F9F5FF 100%);
+    }
+
+    .img-frame .f4 {
+      background: linear-gradient(145deg, #4B0082 0%, #8B5CF6 50%, #E8E4F8 100%);
+    }
+
+    .rain-cell p { font-size: 0.95rem; color: #3a2560; line-height: 1.6; }
+
+    /* ─── KITCHEN ─────────────────────────────── */
+    .kitchen-img {
+      width: 100%;
+      height: 320px;
+      border: var(--border);
+      overflow: hidden;
+      margin-bottom: 20px;
+      box-shadow: 6px 6px 0 var(--matcha);
+    }
+
+    .kitchen-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* ─── ABOUT ───────────────────────────────── */
+    .about-inner {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 32px;
+      align-items: start;
+    }
+
+    .about-text p { font-size: 1.02rem; line-height: 1.7; color: #3a2560; }
+
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    .badge {
+      background: var(--ink);
+      color: var(--cream);
+      padding: 5px 14px;
+      font-weight: 700;
+      font-size: 0.83rem;
+      border: 2px solid var(--matcha);
+      border-radius: 20px;
+      transition: background .15s, color .15s;
+    }
+
+    .badge:hover { background: var(--matcha); color: var(--ink); }
+
+    .avatar-wrap {
+      width: 160px;
+      flex-shrink: 0;
+    }
+
+    .avatar-box {
+      width: 160px;
+      height: 160px;
+      border: var(--border);
+      box-shadow: 6px 6px 0 var(--purple);
+      overflow: hidden;
+      background: linear-gradient(135deg, var(--purple) 0%, #C3B1E1 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 5rem;
+    }
+
+    .avatar-box img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .avatar-label {
+      margin-top: 8px;
+      font-family: 'Caveat', cursive;
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-align: center;
+      color: var(--purple);
+    }
+
+    /* ─── FOOTER ──────────────────────────────── */
+    footer {
+      background: var(--ink);
+      color: var(--lavender);
+      text-align: center;
+      padding: 48px 24px;
+      border-top: 8px solid var(--matcha);
+    }
+
+    footer .footer-title {
+      font-family: 'Caveat', cursive;
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--cream);
+    }
+
+    footer p { font-size: 0.9rem; color: #B0A8D0; }
+
+    .footer-paws {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      font-size: 1.8rem;
+    }
+
+    /* ─── SCROLLBAR ───────────────────────────── */
+    .shelf-wrap::-webkit-scrollbar { height: 8px; }
+    .shelf-wrap::-webkit-scrollbar-track { background: var(--lavender); border: 2px solid var(--ink); }
+    .shelf-wrap::-webkit-scrollbar-thumb { background: var(--purple); border: 2px solid var(--ink); }
+
+    /* ─── MOBILE ──────────────────────────────── */
+    @media (max-width: 760px) {
+      nav { display: none; }
+      nav.open { display: flex; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: var(--cream); border-bottom: var(--border); padding: 12px 24px; gap: 4px; box-shadow: 0 6px 0 var(--purple); }
+      .menu-toggle { display: block; }
+      header { position: relative; flex-wrap: wrap; }
+      .hero-glass { margin: 20px; padding: 24px 24px; }
+      .hero h1 { font-size: 2.2rem; }
+      .card { padding: 24px 20px; }
+      .rain-grid { grid-template-columns: 1fr; }
+      .about-inner { grid-template-columns: 1fr; }
+      .avatar-wrap { width: 100%; display: flex; flex-direction: column; align-items: center; }
+      .wrap { padding: 30px 16px 60px; gap: 36px; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="rain"></canvas>
+
+<div class="site">
+
+  <header id="top">
+    <a href="#top" class="logo">🐼 Linda Lavpanda</a>
+    <button class="menu-toggle" onclick="toggleNav()" aria-label="Menu">☰</button>
+    <nav id="main-nav">
+      <a href="#lab">Learning Lab</a>
+      <a href="#nook">Comic Shelf</a>
+      <a href="#asmr">Rainy Corner</a>
+      <a href="#kitchen">Kitchen</a>
+      <a href="#about">About Me</a>
+    </nav>
+  </header>
+
+  <div class="wrap">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-glass">
+        <p class="hero-eyebrow">✦ Welcome to my digital room</p>
+        <h1>Learning &amp; Fun with Linda Lavpanda</h1>
+        <p>I build this small sanctuary for my thoughts, my study, and my peace. You open the door and you see my world. We sit, we relax, and we watch the rain together.</p>
+        <a href="#lab" class="btn">Step Inside ↓</a>
+      </div>
+    </section>
+
+    <!-- LEARNING LAB -->
+    <section class="card" id="lab" style="animation-delay:.1s">
+      <span class="section-tag">✦ Study Space</span>
+      <h2>The Learning Lab 🧠</h2>
+      <p>My corner for notes and knowledge. I learn many things and I put my thoughts here.</p>
+      <div class="topic-grid">
+        <div class="topic">
+          <span class="topic-icon">🎧</span>
+          <h3>ASMR &amp; Sound</h3>
+          <p>I explore the world of sound — from soft rain to whisper videos. I study how sound affect the brain and help people relax.</p>
+        </div>
+        <div class="topic">
+          <span class="topic-icon">📖</span>
+          <h3>English Literature</h3>
+          <p>I analyze short stories and poetry. I study phonology and how people speak across cultures.</p>
+        </div>
+        <div class="topic">
+          <span class="topic-icon">🤖</span>
+          <h3>Tech &amp; AI</h3>
+          <p>I act as a prompt engineer. I also build SmartCal AI app with the Opal framework.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMIC SHELF -->
+    <section class="card" id="nook" style="animation-delay:.2s">
+      <span class="section-tag">✦ My Reading Corner</span>
+      <h2>The Nook 📚</h2>
+      <p>I read comics when the sky get dark and the rain fall outside.</p>
+      <div class="shelf-wrap" id="shelf">
+        <div class="shelf">
+          <div class="book b1">Volume 01</div>
+          <div class="book b2">Slice of Life</div>
+          <div class="book b3">Rainy Days</div>
+          <div class="book b4">Melancholy</div>
+          <div class="book b5">Spring Vol.</div>
+          <div class="book b1">Volume 06</div>
+          <div class="book b6">Night Hours</div>
+          <div class="book b3">New World</div>
+          <div class="book b2">Volume 09</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RAINY CORNER -->
+    <section class="card" id="asmr" style="animation-delay:.3s">
+      <span class="section-tag">✦ Peace &amp; Quiet</span>
+      <h2>Rainy Day Corner 🌧</h2>
+      <div class="rain-grid">
+        <div class="rain-cell">
+          <div class="img-frame">
+            <img src="WhatsApp Image 2026-04-19 at 00.59.45.jpeg" alt="Moody rain and blue flowers" onerror="this.style.display='none'">
+            <div class="fallback f1">🌧</div>
+          </div>
+          <p>I listen to ASMR for relaxation. It is my favorite hobby. The soft sound make my brain quiet and my heart feel light.</p>
+        </div>
+        <div class="rain-cell">
+          <div class="img-frame">
+            <img src="WhatsApp Image 2026-04-19 at 00.59.52.jpeg" alt="Glass wind chime" onerror="this.style.display='none'">
+            <div class="fallback f2">🔮</div>
+          </div>
+          <p>I like aesthetic weather pictures. Pastel sky, cyberpunk rain, and soft watercolor clouds make me happy inside.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- KITCHEN -->
+    <section class="card" id="kitchen" style="animation-delay:.35s">
+      <span class="section-tag">✦ Cooking Corner</span>
+      <h2>In the Kitchen 🍵</h2>
+      <div class="kitchen-img">
+        <img src="WhatsApp Image 2026-04-19 at 00.59.53 (1).jpeg" alt="Matcha aesthetic" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+        <div class="fallback f3" style="height:100%;display:none;align-items:center;justify-content:center;font-size:5rem;">🍵</div>
+      </div>
+      <p>I love matcha. I join cooking competition and I try new recipe every week. The green color contrast so nice with my purple aesthetic — like the world is made for me.</p>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="card" id="about" style="animation-delay:.4s">
+      <span class="section-tag">✦ Hi there</span>
+      <h2>About Me 🐾</h2>
+      <div class="about-inner">
+        <div class="about-text">
+          <p>Hi, I am Herlinda. My friends call me <strong>linlavpanda</strong>. I plan a trip to Bali with my friends soon. I have a sister — I look exactly like her, but she does not have my purple aesthetic style.</p>
+          <p style="margin-top:12px;">I like cute animals very much. Pandas, quokkas, and dogs live in my heart.</p>
+          <div class="badges">
+            <span class="badge">🐼 Panda Fan</span>
+            <span class="badge">🐻 Quokka Lover</span>
+            <span class="badge">🐶 Dog Friend</span>
+            <span class="badge">🏸 Badminton</span>
+            <span class="badge">🍇 Grapes</span>
+            <span class="badge">🌧 Rain Days</span>
+            <span class="badge">🍵 Matcha</span>
+          </div>
+        </div>
+        <div class="avatar-wrap">
+          <div class="avatar-box">
+            <img src="WhatsApp Image 2026-04-19 at 00.59.46 (1).jpeg" alt="Linda" onerror="this.style.display='none'">
+            🐼
+          </div>
+          <p class="avatar-label">linlavpanda ✦</p>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /wrap -->
+
+  <footer>
+    <p class="footer-title">🐼 Linda Lavpanda</p>
+    <p>made with 💜 from my small digital room to yours</p>
+    <div class="footer-paws">🐾 🌧 🍵 🐼 💜</div>
+  </footer>
+
+</div><!-- /site -->
+
+<script>
+  /* ─── RAIN ANIMATION ─────────────────────── */
+  const canvas = document.getElementById('rain');
+  const ctx    = canvas.getContext('2d');
+  let drops    = [];
+
+  function resize() {
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+    initDrops();
+  }
+
+  function initDrops() {
+    drops = [];
+    const n = Math.floor(canvas.width / 12);
+    for (let i = 0; i < n; i++) {
+      drops.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        len: 14 + Math.random() * 24,
+        speed: 1.8 + Math.random() * 2.2,
+        opacity: 0.25 + Math.random() * 0.5,
+        width: 0.6 + Math.random() * 0.8
+      });
+    }
+  }
+
+  function drawRain() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drops.forEach(d => {
+      ctx.beginPath();
+      ctx.moveTo(d.x, d.y);
+      ctx.lineTo(d.x - d.len * 0.18, d.y + d.len);
+      ctx.strokeStyle = `rgba(140,130,180,${d.opacity})`;
+      ctx.lineWidth   = d.width;
+      ctx.stroke();
+      d.y += d.speed;
+      if (d.y > canvas.height) {
+        d.y   = -d.len;
+        d.x   = Math.random() * canvas.width;
+      }
+    });
+    requestAnimationFrame(drawRain);
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+  drawRain();
+
+  /* ─── DRAG-SCROLL SHELF ──────────────────── */
+  const shelf = document.getElementById('shelf');
+  let isDown = false, startX, scrollLeft;
+
+  shelf.addEventListener('mousedown', e => {
+    isDown    = true;
+    startX    = e.pageX - shelf.offsetLeft;
+    scrollLeft = shelf.scrollLeft;
+  });
+
+  shelf.addEventListener('mouseleave', () => isDown = false);
+  shelf.addEventListener('mouseup',    () => isDown = false);
+  shelf.addEventListener('mousemove', e => {
+    if (!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - shelf.offsetLeft;
+    shelf.scrollLeft = scrollLeft - (x - startX) * 1.4;
+  });
+
+  /* ─── MOBILE NAV ─────────────────────────── */
+  function toggleNav() {
+    document.getElementById('main-nav').classList.toggle('open');
+  }
+
+  /* ─── SCROLL REVEAL ──────────────────────── */
+  const cards = document.querySelectorAll('.card');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  cards.forEach(c => {
+    c.style.opacity = '0';
+    c.style.transform = 'translateY(30px)';
+    c.style.transition = 'opacity .5s ease, transform .5s ease, box-shadow .18s';
+    io.observe(c);
+  });
+</script>
+
+</body>
+</html>
