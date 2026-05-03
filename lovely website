@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🐼 Linda Lavpanda · Digital Sanctuary</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* ── BRAND PALETTE ── */
+      --lilac:      #C8A2C8;
+      --blue-lav:   #B2B2E6;
+      --creme:      #F5EFE0;
+      --soft-white: #FAF8F5;
+      --text-dark:  #4A3F5C;
+      --text-muted: #9B8FA8;
+
+      /* ── DERIVED ── */
+      --lilac-dark:  #A87CA8;
+      --lilac-light: #E8D5E8;
+      --blue-light:  #D8D8F8;
+      --creme-dark:  #E8DCC8;
+
+      /* ── NEO-BRUTALIST BORDERS ── */
+      --border:     3px solid var(--text-dark);
+      --shadow-lil: 8px 8px 0 var(--lilac);
+      --shadow-blue: 8px 8px 0 var(--blue-lav);
+      --shadow-dark: 8px 8px 0 var(--text-dark);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--soft-white);
+      color: var(--text-dark);
+      font-family: 'DM Sans', sans-serif;
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    /* ── WATERCOLOR TEXTURE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 10%, rgba(200,162,200,0.13) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 80% at 80% 90%, rgba(178,178,230,0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 50% at 50% 50%, rgba(245,239,224,0.08) 0%, transparent 80%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── RAIN CANVAS ── */
+    #rain {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none; z-index: 0; opacity: 0.15;
+    }
+
+    .site { position: relative; z-index: 1; }
+
+    /* ── HEADER ── */
+    header {
+      position: sticky; top: 0; z-index: 200;
+      background: var(--creme);
+      border-bottom: var(--border);
+      box-shadow: 0 5px 0 var(--lilac);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 6%;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.7rem;
+      font-weight: 900;
+      color: var(--lilac-dark);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+      font-style: italic;
+    }
+
+    nav { display: flex; gap: 4px; }
+
+    nav a {
+      color: var(--text-dark);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 6px 12px;
+      border: 2px solid transparent;
+      transition: border-color .18s, background .18s, color .18s;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    nav a:hover {
+      border-color: var(--lilac);
+      background: var(--lilac-light);
+      color: var(--text-dark);
+    }
+
+    .menu-toggle {
+      display: none; cursor: pointer;
+      background: var(--lilac); color: #fff;
+      border: var(--border); padding: 4px 10px;
+      font-size: 1.1rem;
+    }
+
+    /* ── CONTAINER ── */
+    .wrap {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 50px 24px 80px;
+      display: flex; flex-direction: column; gap: 52px;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 540px;
+      border: var(--border);
+      box-shadow: 14px 14px 0 var(--lilac);
+      border-radius: 4px;
+      overflow: hidden;
+      display: flex; align-items: flex-end;
+      background: linear-gradient(135deg, #C8A2C8 0%, #B2B2E6 50%, #F5EFE0 100%);
+    }
+
+    .hero-bg {
+      position: absolute; inset: 0;
+      background-image: url('WhatsApp Image 2026-04-19 at 00.59.46 (1).jpeg');
+      background-size: cover;
+      background-position: center top;
+      transition: transform 6s ease;
+    }
+
+    .hero:hover .hero-bg { transform: scale(1.03); }
+
+    .hero-bg::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg,
+        rgba(200,162,200,0.6) 0%,
+        rgba(178,178,230,0.4) 50%,
+        rgba(74,63,92,0.3) 100%);
+    }
+
+    .hero-glass {
+      position: relative; z-index: 2;
+      margin: 36px;
+      background: rgba(250,248,245,0.82);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: var(--border);
+      border-radius: 4px;
+      padding: 40px 44px;
+      max-width: 580px;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--lilac-dark);
+      margin-bottom: 12px;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 16px;
+      color: var(--text-dark);
+      font-style: italic;
+    }
+
+    .hero p {
+      font-size: 1.02rem;
+      font-weight: 300;
+      line-height: 1.75;
+      color: var(--text-dark);
+      max-width: 420px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 22px;
+      padding: 11px 28px;
+      background: var(--lilac);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 0.04em;
+      border: var(--border);
+      box-shadow: 5px 5px 0 var(--text-dark);
+      transition: transform .18s, box-shadow .18s, background .18s;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .btn:hover {
+      background: var(--blue-lav);
+      transform: translate(-2px,-2px);
+      box-shadow: 7px 7px 0 var(--text-dark);
+      color: var(--text-dark);
+    }
+
+    /* ── SECTION CARD ── */
+    .card {
+      background: var(--soft-white);
+      border: var(--border);
+      box-shadow: var(--shadow-lil);
+      padding: 36px 40px;
+      border-radius: 2px;
+      transition: transform .18s, box-shadow .18s;
+    }
+
+    .card:hover {
+      transform: translate(-3px,-3px);
+      box-shadow: var(--shadow-blue);
+    }
+
+    .card.creme-bg { background: var(--creme); }
+    .card.blue-bg  { background: var(--blue-light); }
+
+    .section-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--lilac);
+      padding: 4px 12px;
+      border: 2px solid var(--text-dark);
+      margin-bottom: 12px;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .card h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem;
+      font-weight: 900;
+      border-bottom: var(--border);
+      padding-bottom: 8px;
+      margin-bottom: 20px;
+      line-height: 1.1;
+      color: var(--text-dark);
+      font-style: italic;
+    }
+
+    .card > p { font-size: 1rem; color: var(--text-dark); margin-bottom: 24px; }
+
+    /* ── LEARNING LAB GRID ── */
+    .topic-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+      gap: 20px;
+    }
+
+    .topic {
+      border-left: 6px solid var(--lilac);
+      border-top: 2px solid var(--text-dark);
+      border-right: 2px solid var(--text-dark);
+      border-bottom: 2px solid var(--text-dark);
+      background: var(--creme);
+      padding: 22px;
+      box-shadow: 4px 4px 0 var(--blue-lav);
+      transition: transform .15s, box-shadow .15s;
+    }
+
+    .topic:hover {
+      transform: translate(-2px,-2px);
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+
+    .topic h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--lilac-dark);
+    }
+
+    .topic p { font-size: 0.92rem; color: var(--text-dark); line-height: 1.6; }
+    .topic-icon { font-size: 1.5rem; margin-bottom: 8px; display: block; }
+
+    /* ── COMIC SHELF ── */
+    .shelf-wrap {
+      overflow-x: auto; padding-bottom: 16px; cursor: grab;
+    }
+    .shelf-wrap:active { cursor: grabbing; }
+    .shelf {
+      display: flex; gap: 16px;
+      width: max-content; padding: 8px 2px 12px;
+    }
+
+    .book {
+      width: 120px; height: 180px;
+      border: var(--border);
+      display: flex; align-items: center; justify-content: center;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem; font-weight: 600; font-style: italic;
+      box-shadow: 5px 5px 0 var(--text-dark);
+      transition: transform .25s cubic-bezier(.34,1.56,.64,1);
+      cursor: pointer; user-select: none;
+      position: relative; overflow: hidden;
+    }
+
+    .book::after {
+      content: '';
+      position: absolute; left: 0; top: 0;
+      width: 12px; height: 100%;
+      background: rgba(74,63,92,0.15);
+    }
+
+    .book:hover { transform: rotate(-6deg) translateY(-12px); }
+
+    .b1 { background: var(--lilac);    color: #fff; }
+    .b2 { background: var(--blue-lav); color: var(--text-dark); }
+    .b3 { background: var(--creme);    color: var(--text-dark); }
+    .b4 { background: #D8C8E8;         color: var(--text-dark); }
+    .b5 { background: #E8D0D8;         color: var(--text-dark); }
+    .b6 { background: var(--text-dark);color: var(--creme); }
+
+    /* ── RAINY CORNER ── */
+    .rain-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .rain-cell { display: flex; flex-direction: column; gap: 14px; }
+
+    .img-frame {
+      width: 100%; height: 230px;
+      border: var(--border); overflow: hidden;
+      position: relative;
+      box-shadow: 6px 6px 0 var(--lilac);
+    }
+
+    .img-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .img-frame .fallback {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 4rem;
+    }
+    .f1 { background: linear-gradient(145deg, #B2B2E6 0%, #C8A2C8 50%, #F5EFE0 100%); }
+    .f2 { background: linear-gradient(145deg, #D8C8E8 0%, #B2B2E6 60%, #FAF8F5 100%); }
+    .f3 { background: linear-gradient(145deg, #C8A2C8 0%, #F5EFE0 50%, #FAF8F5 100%); }
+    .f4 { background: linear-gradient(145deg, #4A3F5C 0%, #9B8FA8 50%, #B2B2E6 100%); }
+
+    .rain-cell p { font-size: 0.95rem; color: var(--text-dark); line-height: 1.7; font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; }
+
+    /* ── KITCHEN ── */
+    .kitchen-img {
+      width: 100%; height: 300px;
+      border: var(--border); overflow: hidden;
+      margin-bottom: 20px;
+      box-shadow: 6px 6px 0 var(--blue-lav);
+    }
+
+    .kitchen-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* ── SHORT STORIES SECTION ── */
+    .stories-intro {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.18rem;
+      font-style: italic;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+      border-left: 4px solid var(--lilac);
+      padding-left: 18px;
+    }
+
+    .stories-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+
+    .story-folder {
+      border: var(--border);
+      background: var(--creme);
+      box-shadow: 6px 6px 0 var(--lilac);
+      transition: transform .18s, box-shadow .18s;
+      overflow: hidden;
+    }
+
+    .story-folder:hover {
+      transform: translate(-3px,-3px);
+      box-shadow: 9px 9px 0 var(--blue-lav);
+    }
+
+    .story-folder-tab {
+      background: var(--lilac);
+      color: #fff;
+      padding: 10px 20px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border-bottom: var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .story-folder-body {
+      padding: 28px 28px 32px;
+    }
+
+    .story-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      margin-bottom: 6px;
+    }
+
+    .story-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.7rem;
+      font-weight: 900;
+      font-style: italic;
+      color: var(--text-dark);
+      line-height: 1.15;
+      margin-bottom: 14px;
+    }
+
+    .story-excerpt {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      line-height: 1.75;
+      font-style: italic;
+      margin-bottom: 22px;
+    }
+
+    .story-divider {
+      width: 60px; height: 2px;
+      background: linear-gradient(to right, var(--lilac), var(--blue-lav));
+      margin-bottom: 22px;
+    }
+
+    .story-meta {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+    }
+
+    .story-tag {
+      background: var(--blue-light);
+      color: var(--text-dark);
+      padding: 3px 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      border: 1.5px solid var(--blue-lav);
+      font-family: 'DM Sans', sans-serif;
+      letter-spacing: 0.06em;
+    }
+
+    .story-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px;
+      background: var(--lilac);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.88rem;
+      border: var(--border);
+      box-shadow: 4px 4px 0 var(--text-dark);
+      transition: transform .18s, box-shadow .18s, background .18s;
+      font-family: 'DM Sans', sans-serif;
+      letter-spacing: 0.04em;
+    }
+
+    .story-link:hover {
+      background: var(--blue-lav);
+      color: var(--text-dark);
+      transform: translate(-2px,-2px);
+      box-shadow: 6px 6px 0 var(--text-dark);
+    }
+
+    .story-link::after { content: '→'; font-size: 1rem; }
+
+    .story-floral {
+      text-align: center;
+      font-size: 1.4rem;
+      letter-spacing: 6px;
+      color: var(--lilac);
+      margin-bottom: 14px;
+    }
+
+    /* ── ABOUT ── */
+    .about-inner {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 32px; align-items: start;
+    }
+
+    .about-text p {
+      font-size: 1.05rem;
+      line-height: 1.75;
+      color: var(--text-dark);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+    }
+
+    .badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+
+    .badge {
+      background: var(--text-dark);
+      color: var(--creme);
+      padding: 5px 14px;
+      font-weight: 600;
+      font-size: 0.82rem;
+      border: 2px solid var(--lilac);
+      border-radius: 20px;
+      transition: background .15s, color .15s;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .badge:hover { background: var(--lilac); color: #fff; }
+
+    .avatar-wrap { width: 160px; flex-shrink: 0; }
+
+    .avatar-box {
+      width: 160px; height: 160px;
+      border: var(--border);
+      box-shadow: 6px 6px 0 var(--lilac);
+      overflow: hidden;
+      background: linear-gradient(135deg, var(--lilac) 0%, var(--blue-lav) 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 5rem;
+    }
+
+    .avatar-box img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .avatar-label {
+      margin-top: 8px;
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem; font-weight: 700; font-style: italic;
+      text-align: center;
+      color: var(--lilac-dark);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--text-dark);
+      color: var(--creme);
+      text-align: center;
+      padding: 48px 24px;
+      border-top: 6px solid var(--lilac);
+    }
+
+    footer .footer-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; font-weight: 900; font-style: italic;
+      margin-bottom: 8px;
+      color: var(--creme);
+    }
+
+    footer p { font-size: 0.9rem; color: var(--text-muted); }
+
+    .footer-paws {
+      margin-top: 20px; display: flex;
+      justify-content: center; gap: 14px; font-size: 1.6rem;
+    }
+
+    /* ── SCROLLBAR ── */
+    .shelf-wrap::-webkit-scrollbar { height: 8px; }
+    .shelf-wrap::-webkit-scrollbar-track { background: var(--creme); border: 2px solid var(--text-dark); }
+    .shelf-wrap::-webkit-scrollbar-thumb { background: var(--lilac); border: 2px solid var(--text-dark); }
+
+    /* ── MOBILE ── */
+    @media (max-width: 760px) {
+      nav { display: none; }
+      nav.open {
+        display: flex; flex-direction: column;
+        position: absolute; top: 100%; left: 0; right: 0;
+        background: var(--creme); border-bottom: var(--border);
+        padding: 12px 24px; gap: 4px;
+        box-shadow: 0 6px 0 var(--lilac);
+      }
+      .menu-toggle { display: block; }
+      header { position: relative; flex-wrap: wrap; }
+      .hero-glass { margin: 20px; padding: 24px 24px; }
+      .hero h1 { font-size: 2rem; }
+      .card { padding: 24px 20px; }
+      .rain-grid { grid-template-columns: 1fr; }
+      .stories-grid { grid-template-columns: 1fr; }
+      .about-inner { grid-template-columns: 1fr; }
+      .avatar-wrap { width: 100%; display: flex; flex-direction: column; align-items: center; }
+      .wrap { padding: 30px 16px 60px; gap: 36px; }
+    }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .55s ease, transform .55s ease, box-shadow .18s;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+<canvas id="rain"></canvas>
+
+<div class="site">
+
+  <!-- HEADER -->
+  <header id="top">
+    <a href="#top" class="logo">🐼 Linda Lavpanda</a>
+    <button class="menu-toggle" onclick="toggleNav()" aria-label="Menu">☰</button>
+    <nav id="main-nav">
+      <a href="#lab">Learning Lab</a>
+      <a href="#stories">Short Stories</a>
+      <a href="#nook">Comic Shelf</a>
+      <a href="#asmr">Rainy Corner</a>
+      <a href="#kitchen">Kitchen</a>
+      <a href="#about">About Me</a>
+    </nav>
+  </header>
+
+  <div class="wrap">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-glass">
+        <p class="hero-eyebrow">✦ Welcome to my digital room</p>
+        <h1>Learning &amp; Fun with Linda Lavpanda</h1>
+        <p>I build this small sanctuary for my thoughts, my study, and my peace. You open the door and you see my world. We sit, we relax, and we watch the rain together.</p>
+        <a href="#lab" class="btn">Step Inside ↓</a>
+      </div>
+    </section>
+
+    <!-- LEARNING LAB -->
+    <section class="card reveal" id="lab">
+      <span class="section-tag">✦ Study Space</span>
+      <h2>The Learning Lab 🧠</h2>
+      <p>My corner for notes and knowledge. I learn many things and I put my thoughts here.</p>
+      <div class="topic-grid">
+        <div class="topic">
+          <span class="topic-icon">🎧</span>
+          <h3>ASMR &amp; Sound</h3>
+          <p>I explore the world of sound — from soft rain to whisper videos. I study how sound affect the brain and help people relax.</p>
+        </div>
+        <div class="topic">
+          <span class="topic-icon">📖</span>
+          <h3>English Literature</h3>
+          <p>I analyze short stories and poetry. I study phonology and how people speak across cultures.</p>
+        </div>
+        <div class="topic">
+          <span class="topic-icon">✍️</span>
+          <h3>Short Stories</h3>
+          <p>I write short stories from my heart. Each story is a small door to a different feeling and world.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SHORT STORIES -->
+    <section class="card creme-bg reveal" id="stories">
+      <span class="section-tag">✦ Literary Corner</span>
+      <h2>Short Stories 📖</h2>
+      <p class="stories-intro">Each story lives in its own folder — a little world waiting for you to open the door.</p>
+
+      <div class="stories-grid">
+
+        <!-- Story 1 -->
+        <div class="story-folder">
+          <div class="story-folder-tab">
+            📁 &nbsp;Folder I · Someone Over the Rainbow
+          </div>
+          <div class="story-folder-body">
+            <div class="story-floral">✿ ❧ ✿</div>
+            <p class="story-number">Story No. 001</p>
+            <h3 class="story-title">Someone Over the Rainbow</h3>
+            <div class="story-divider"></div>
+            <p class="story-excerpt">
+              A quiet story about longing, distance, and the colors we carry inside us. 
+              Somewhere beyond the rainbow, someone is waiting.
+            </p>
+            <div class="story-meta">
+              <span class="story-tag">✦ Emotional</span>
+              <span class="story-tag">✦ Dreamy</span>
+              <span class="story-tag">✦ Literary</span>
+            </div>
+            <a href="https://gemini.google.com/share/9be49bd66fac" target="_blank" class="story-link">
+              Read Story
+            </a>
+          </div>
+        </div>
+
+        <!-- Story 2 -->
+        <div class="story-folder">
+          <div class="story-folder-tab">
+            📁 &nbsp;Folder II · Appu Millimongga
+          </div>
+          <div class="story-folder-body">
+            <div class="story-floral">✿ ❧ ✿</div>
+            <p class="story-number">Story No. 002</p>
+            <h3 class="story-title">Appu Millimongga</h3>
+            <div class="story-divider"></div>
+            <p class="story-excerpt">
+              A tender tale woven from memory and warmth. Appu walks through a world 
+              that is soft, strange, and beautifully human.
+            </p>
+            <div class="story-meta">
+              <span class="story-tag">✦ Tender</span>
+              <span class="story-tag">✦ Nostalgic</span>
+              <span class="story-tag">✦ Character</span>
+            </div>
+            <a href="https://gemini.google.com/share/24e9f54234a5" target="_blank" class="story-link">
+              Read Story
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- COMIC SHELF -->
+    <section class="card blue-bg reveal" id="nook">
+      <span class="section-tag">✦ My Reading Corner</span>
+      <h2>The Nook 📚</h2>
+      <p>I read comics when the sky get dark and the rain fall outside.</p>
+      <div class="shelf-wrap" id="shelf">
+        <div class="shelf">
+          <div class="book b1">Volume 01</div>
+          <div class="book b2">Slice of Life</div>
+          <div class="book b3">Rainy Days</div>
+          <div class="book b4">Melancholy</div>
+          <div class="book b5">Spring Vol.</div>
+          <div class="book b1">Volume 06</div>
+          <div class="book b6">Night Hours</div>
+          <div class="book b3">New World</div>
+          <div class="book b2">Volume 09</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RAINY CORNER -->
+    <section class="card reveal" id="asmr">
+      <span class="section-tag">✦ Peace &amp; Quiet</span>
+      <h2>Rainy Day Corner 🌧</h2>
+      <div class="rain-grid">
+        <div class="rain-cell">
+          <div class="img-frame">
+            <img src="WhatsApp Image 2026-04-19 at 00.59.45.jpeg" alt="Moody rain and blue flowers" onerror="this.style.display='none'">
+            <div class="fallback f1">🌧</div>
+          </div>
+          <p>I listen to ASMR for relaxation. It is my favorite hobby. The soft sound make my brain quiet and my heart feel light.</p>
+        </div>
+        <div class="rain-cell">
+          <div class="img-frame">
+            <img src="WhatsApp Image 2026-04-19 at 00.59.52.jpeg" alt="Glass wind chime" onerror="this.style.display='none'">
+            <div class="fallback f2">🔮</div>
+          </div>
+          <p>I like aesthetic weather pictures. Pastel sky and soft watercolor clouds make me happy inside. The rain always feels like a friend.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- KITCHEN -->
+    <section class="card creme-bg reveal" id="kitchen">
+      <span class="section-tag">✦ Cooking Corner</span>
+      <h2>In the Kitchen 🍵</h2>
+      <div class="kitchen-img">
+        <img src="WhatsApp Image 2026-04-19 at 00.59.53 (1).jpeg" alt="Matcha aesthetic" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+        <div class="fallback f3" style="height:100%;display:none;align-items:center;justify-content:center;font-size:5rem;">🍵</div>
+      </div>
+      <p>I love make a matcha also create food experiment with my creativity. I love meatball and tofu also dimsum.</p>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="card reveal" id="about">
+      <span class="section-tag">✦ Hi there</span>
+      <h2>About Me 🐾</h2>
+      <div class="about-inner">
+        <div class="about-text">
+          <p>Hi, I am Herlinda. My friends call me <strong>linda</strong>. I plan a trip to make ASMR video during semester break also sleep all the time. I purple y'all.</p>
+          <p style="margin-top:12px;">I like cute animals very much. Pandas, quokkas, and dogs live in my heart.</p>
+          <div class="badges">
+            <span class="badge">🐼 Panda Fan</span>
+            <span class="badge">🐻 Quokka Lover</span>
+            <span class="badge">🐶 Dog Friend</span>
+            <span class="badge">🏸 Badminton</span>
+            <span class="badge">🍇 Grapes</span>
+            <span class="badge">🌧 Rain Days</span>
+            <span class="badge">🍵 Matcha</span>
+            <span class="badge">💜 Purple World</span>
+          </div>
+        </div>
+        <div class="avatar-wrap">
+          <div class="avatar-box">
+            <img src="WhatsApp Image 2026-04-19 at 00.59.46 (1).jpeg" alt="Linda" onerror="this.style.display='none'">
+            🐼
+          </div>
+          <p class="avatar-label">linlavpanda ✦</p>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /wrap -->
+
+  <footer>
+    <p class="footer-title">🐼 Linda Lavpanda</p>
+    <p>made with 💜 from my small digital room to yours</p>
+    <div class="footer-paws">🐾 🌧 🍵 🐼 💜</div>
+  </footer>
+
+</div><!-- /site -->
+
+<script>
+  /* ─── RAIN ANIMATION ─── */
+  const canvas = document.getElementById('rain');
+  const ctx    = canvas.getContext('2d');
+  let drops    = [];
+
+  function resize() {
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+    initDrops();
+  }
+
+  function initDrops() {
+    drops = [];
+    const n = Math.floor(canvas.width / 12);
+    for (let i = 0; i < n; i++) {
+      drops.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        len: 14 + Math.random() * 24,
+        speed: 1.6 + Math.random() * 2,
+        opacity: 0.2 + Math.random() * 0.45,
+        width: 0.5 + Math.random() * 0.7
+      });
+    }
+  }
+
+  function drawRain() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drops.forEach(d => {
+      ctx.beginPath();
+      ctx.moveTo(d.x, d.y);
+      ctx.lineTo(d.x - d.len * 0.16, d.y + d.len);
+      ctx.strokeStyle = `rgba(200,162,200,${d.opacity})`;
+      ctx.lineWidth   = d.width;
+      ctx.stroke();
+      d.y += d.speed;
+      if (d.y > canvas.height) { d.y = -d.len; d.x = Math.random() * canvas.width; }
+    });
+    requestAnimationFrame(drawRain);
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+  drawRain();
+
+  /* ─── DRAG-SCROLL SHELF ─── */
+  const shelf = document.getElementById('shelf');
+  let isDown = false, startX, scrollLeft;
+  shelf.addEventListener('mousedown', e => { isDown = true; startX = e.pageX - shelf.offsetLeft; scrollLeft = shelf.scrollLeft; });
+  shelf.addEventListener('mouseleave', () => isDown = false);
+  shelf.addEventListener('mouseup',    () => isDown = false);
+  shelf.addEventListener('mousemove', e => {
+    if (!isDown) return;
+    e.preventDefault();
+    shelf.scrollLeft = scrollLeft - (e.pageX - shelf.offsetLeft - startX) * 1.4;
+  });
+
+  /* ─── MOBILE NAV ─── */
+  function toggleNav() {
+    document.getElementById('main-nav').classList.toggle('open');
+  }
+
+  /* ─── SCROLL REVEAL ─── */
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  reveals.forEach(r => io.observe(r));
+</script>
+
+</body>
+</html>
