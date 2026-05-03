@@ -664,7 +664,7 @@
         <div class="topic">
           <span class="topic-icon">📖</span>
           <h3>English Literature</h3>
-          <p>I analyze short stories and poetry. I study phonology and how people speak across cultures.</p>
+          <p>I will share the available works about literature that I make by myself in here.</p>
         </div>
         <div class="topic">
           <span class="topic-icon">✍️</span>
@@ -693,8 +693,7 @@
             <h3 class="story-title">Someone Over the Rainbow</h3>
             <div class="story-divider"></div>
             <p class="story-excerpt">
-              A quiet story about longing, distance, and the colors we carry inside us. 
-              Somewhere beyond the rainbow, someone is waiting.
+              The title of my story, Someone Over the Rainbow, is actually inspired by a song by IZ called Somewhere Over the Rainbow. It is my favorite song, and I always play it while I write this story.
             </p>
             <div class="story-meta">
               <span class="story-tag">✦ Emotional</span>
@@ -718,8 +717,7 @@
             <h3 class="story-title">Appu Millimongga</h3>
             <div class="story-divider"></div>
             <p class="story-excerpt">
-              A tender tale woven from memory and warmth. Appu walks through a world 
-              that is soft, strange, and beautifully human.
+              I never thought of using this idea to write a story. It kept me awake as a child when my mom told it before bed. She also used to scare me by saying 'Appu Millimongga is coming' whenever I didn't want to eat or do what I was told.
             </p>
             <div class="story-meta">
               <span class="story-tag">✦ Tender</span>
@@ -795,7 +793,7 @@
       <div class="about-inner">
         <div class="about-text">
           <p>Hi, I am Herlinda. My friends call me <strong>linda</strong>. I plan a trip to make ASMR video during semester break also sleep all the time. I purple y'all.</p>
-          <p style="margin-top:12px;">I like cute animals very much. Pandas, quokkas, and dogs live in my heart.</p>
+          <p style="margin-top:12px;">I like cute animals very much. Pandas, quokkas, and dogs live in my heart. My favorite movies are Chibi Maruko-chan and Doraemon.</p>
           <div class="badges">
             <span class="badge">🐼 Panda Fan</span>
             <span class="badge">🐻 Quokka Lover</span>
@@ -804,6 +802,9 @@
             <span class="badge">🍇 Grapes</span>
             <span class="badge">🌧 Rain Days</span>
             <span class="badge">🍵 Matcha</span>
+            <span class="badge">🍬 Jelly Candy</span>
+            <span class="badge">🎌 Chibi Maruko</span>
+            <span class="badge">🤖 Doraemon</span>
             <span class="badge">💜 Purple World</span>
           </div>
         </div>
